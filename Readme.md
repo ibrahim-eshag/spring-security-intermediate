@@ -2,12 +2,13 @@
 
 ### continue-Basic Authentication
 
-Besides the InMemoryUserDetailsManager, we often use another UserDetailManager
+Besides the InMemoryUserDetailsManager, we often use other UserDetailManager
 implementation, JdbcUserDetailsManager. The JdbcUserDetailsManager
-class manages users in an SQL database. It connects to the database directly through
+interface manages users in an SQL database. It connects to the database directly through
 JDBC.
 
-* InMemoryUserDetailsManager, JdbcUserDetailsManager and Other interfaces of UserDetailsManager extends from
+* InMemoryUserDetailsManager, JdbcUserDetailsManager and LdapUserDetailsManager (not used much now days) interfaces all
+  extends
   UserDetailsManager.
 * UserDetailsManager is also extending UserDetailsService with additional features (create, update, delete a user and
   update the password, etc.) .
