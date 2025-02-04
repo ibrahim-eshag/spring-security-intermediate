@@ -1,5 +1,8 @@
 package com.ibrahimeshag.basicspringsecutiywithjdbcuserdetailsmanager.config;
 
+import com.ibrahimeshag.basicspringsecutiywithjdbcuserdetailsmanager.filters.AuthenticationLoggingFilter;
+import com.ibrahimeshag.basicspringsecutiywithjdbcuserdetailsmanager.filters.RequestValidationFilter;
+import com.ibrahimeshag.basicspringsecutiywithjdbcuserdetailsmanager.filters.StaticKeyAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -9,6 +12,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.sql.DataSource;
 
@@ -45,6 +49,13 @@ public class ProjectConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+//                .addFilterBefore(new RequestValidationFilter(), BasicAuthenticationFilter.class)
+                .addFilterAfter(new AuthenticationLoggingFilter(), BasicAuthenticationFilter.class)
+//                .addFilterAt(new StaticKeyAuthenticationFilter(), BasicAuthenticationFilter.class)
+        ;
+        // adding the filter before/after the Authentication
+
         http.httpBasic(Customizer.withDefaults());
         /* `http.httpBasic(Customizer.withDefaults())` configures Spring Security to parse this header and authenticate the user
           credentials against the configured authentication mechanism (in your case, `JdbcUserDetailsManager`).
